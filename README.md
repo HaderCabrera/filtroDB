@@ -303,6 +303,25 @@ parámetros el nombre, descripción y precio de un nuevo producto y lo inserte e
     ```
     CALL AgregarProducto('ASUS',150.00, 'ASUS TUF GAMING 504GE LO MEJOR DE MI EPOCA');
     ```
+1. Crea un procedimiento almacenado llamado ObtenerDetallesPedido que reciba
+como parámetro el ID del pedido y devuelva los detalles del pedido, incluyendo el nombre del producto, cantidad y precio unitario.
+
+    ```sql
+        DELIMITER $$
+        CREATE PROCEDURE ObtenerDetallesPedido (
+            IN idPedido INT
+        )
+        BEGIN
+            SELECT PR.nombre AS Producto, DP.cantidad, DP.precio_unitario
+            FROM detallepedidos AS DP
+            INNER JOIN productos AS PR ON DP.id_producto = PR.id
+            WHERE DP.id_pedido = idPedido;
+        END $$
+        DELIMITER ;
+    ```
+    ```
+    CALL ObtenerDetallesPedido(1);
+    ```
 
 1. Crea un procedimiento almacenado llamado ActualizarPrecioProducto que reciba como parámetros el ID del producto y el nuevo precio, y actualice el precio del producto en la tabla Productos .
     ```sql
